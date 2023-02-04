@@ -63,7 +63,7 @@ pip install Flask-WTF
 ## Trabajando con la Base de Datos
 <br></br>
 1. Para este proyecto usa MySQL y crea una base de datos como viene en el sqlqueries.sql
-
+<br></br>
 2. Instalar en el entorno virtual las dependencias: mysqlclient, flask-mysql y flask-mysqldb
 
 ```sh
@@ -79,9 +79,36 @@ sudo apt-get upgrade
 sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
 sudo apt autoremove
 ```
-
+<br></br>
 3. Actualizar el archivo config.py con la información de MySQL y instanciar en el init. (En este caso me pedirá la contraseña de la DB por consola)
-
+<br></br>
 4. En el archivo init probamos la conexion a la base de datos generando una vista de prueba para los libros (función list_books) y la visualizamos en un template (trial_books.html)
-
+<br></br>
 5. Se crean los modelos y entidades de cada objeto de tabla creado en la base de datos para eficientizar su manipulación. Observe la carpeta models y la subcarpeta entities.
+<br></br>
+<br></br>
+### Gestión de Sesiones
+<br></br>
+1. Creamos un metodo con werzeug en la entidad usuario para encriptar la contraseña. Adicionalmente, generamos 3 usuarios con el password encriptado; un admin y dos client.
+<br></br>
+2. Creamos el modelo usuario (model_user) en la carpeta de modelos con su función login y ajustamos la función login en el init para mejorar la lógica de autenticación y seguridad.
+<br></br>
+3. Para mantener la persistencia de las sesiones intalaremos la siguiente librería:
+
+```sh
+pip install flask-login
+```
+
+- Adicionalmente, tendras que actualizar el modelo user, la entidad user y el init app en la función del login.
+
+<br></br>
+4. Teniendo una sesión iniciada, será necesario crear un cierre de sesión para lo cual agregamos la vista correspondiente en el init app y ajustamos nuestra barra de navegación.
+
+<br></br>
+5. Creamos las flashes para enviar mensajes de inicio de sesión invalido o cierre de sesión exitoso.
+<br></br>
+6. Categorizamos los mensajes flash para danger, warning y success.
+<br></br>
+7. Agregamps el decorador login_required para aquellas url's donde necesitaremos acceso autorizado.
+<br></br>
+8. Creamos tres mejoras en nuestra aplicación. Primero delegamos el chequeo de nuestra contraseña a la entidad usuario y ajustamos en nuestro modelo usuario. Segundo, ajustamos nuestro modelo usuario para mantenernos en la app a pesar de la no existencia del nombre de usuario en la base de datos y, finalmente, la tercer modificación es referente a agregar el usuario y tipo de usuario en una posición visible de nuestra barra de navegación.

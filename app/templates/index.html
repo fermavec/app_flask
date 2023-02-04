@@ -5,7 +5,16 @@
 {% block container %}
 <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <h1>Welcome to Fer Mavec</h1>
+        <h1>Fer Mavec's Store</h1>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success" role="alert">
+            Hello {{ current_user.userName }}!, {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
     </div>
 </div>
 {% endblock %}
