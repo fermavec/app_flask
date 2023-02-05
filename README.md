@@ -112,3 +112,16 @@ pip install flask-login
 7. Agregamps el decorador login_required para aquellas url's donde necesitaremos acceso autorizado.
 <br></br>
 8. Creamos tres mejoras en nuestra aplicación. Primero delegamos el chequeo de nuestra contraseña a la entidad usuario y ajustamos en nuestro modelo usuario. Segundo, ajustamos nuestro modelo usuario para mantenernos en la app a pesar de la no existencia del nombre de usuario en la base de datos y, finalmente, la tercer modificación es referente a agregar el usuario y tipo de usuario en una posición visible de nuestra barra de navegación.
+
+<br></br>
+<br></br>
+### Operaciones con tablas
+<br></br>
+1. Ajustamos nuestra aplicación en la función index y en el template index.html para presentar la información dependiente de cada usuario.
+<br></br>
+2. Generames la vista del listado de libros con la correspondiente información.
+<br></br>
+3. Agregamos un manejador de errores con su correspondiente plantilla. Actualizamos la vista list_books
+<br></br>
+4. Ajustamos toda la función de compra agregando una fetchapi de javascript que nos permita conectar el evento de boton de compra y enviar la información al servidor para su posterior registro en la base de datos. Todo esto mediante una vista nueva y un modelo de venta.
+<br></br>

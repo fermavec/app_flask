@@ -17,4 +17,29 @@
         {% endwith %}
     </div>
 </div>
+<hr/>
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <h2>{{ data.title }}</h2>
+        <hr/>
+    </div>
+    {% if current_user.idUserAccess == 1 %}
+        
+        {% if data.sold_items|length > 0 %}
+        
+        {% else %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <h3>There are no sold items</h3>
+        </div>
+        {% endif %}
+    {% else %}
+        {% if data.my_books|length > 0 %}
+        
+        {% else %}
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <h3>There are no books in your library</h3>
+        </div>
+        {% endif %}    
+    {% endif %}
+</div>
 {% endblock %}

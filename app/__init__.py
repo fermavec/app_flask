@@ -1,14 +1,16 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_mysqldb import MySQL
 from flask_wtf.csrf import CSRFProtect
-from flask_login import LoginManager, login_user, logout_user, login_required
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 
 from .constants import *
-
 from .models.entities.user import User
+from .models.entities.book import Book
+from .models.entities.sale import Sale
 
 from .models.model_book import ModelBook
 from .models.model_user import ModelUser
+from .models.model_sale import ModelSale
 
 app = Flask(__name__)
 csrf = CSRFProtect()
@@ -19,12 +21,6 @@ login_manager_app = LoginManager(app)
 @login_manager_app.user_loader
 def load_user(id):
     return ModelUser.get_by_id(db, id)
-
-
-@app.route('/')
-@login_required
-def index():
-    return render_template('index.html')
 
 
 def not_found(error):
@@ -58,6 +54,28 @@ def logout():
     return redirect(url_for('login'))
 
 
+@app.route('/')
+@login_required
+def index():
+    if current_user.is_authenticated:
+        if current_user.idUserAccess.idUserAccess == 1:
+            sold_items = []
+            data = {
+                'title': 'Sold Items',
+                'sold_items': sold_items
+            }
+        else:
+            my_books = []
+            data = {
+                'title': 'My Books',
+                'my_books': my_books
+            }
+        return render_template('index.html', data=data)
+    else:
+        redirect(url_for('login'))
+
+
+
 # Prueba de conexión a BD
 @app.route('/books')
 @login_required
@@ -66,13 +84,32 @@ def list_books():
         bks = ModelBook.listing_books(db)
         
         data = {
+            'title': 'Book List',
             'bks': bks
         }
 
-        return render_template('trial_books.html', data=data)
+        return render_template('books.html', data=data)
     except Exception as e:
-        raise Exception(e)
+        return render_template('error_templates/error.html', message=format(e))
 
+
+@app.route('/buybook', methods=['POST'])
+@login_required
+def buy_book():
+    data_request = request.get_json()
+    data={}
+
+    try:
+        book = Book(data_request['isbn'], None, None, None)
+        user_purchase = Sale(None, book.isbn, current_user.idUser, None)
+        print(vars(user_purchase))
+        data['success'] = ModelSale.register(db, user_purchase)
+    except Exception as e:
+        data['message'] = format(e)
+        data['mostrar'] = 'yo digo que aqui esta el error'
+        data['success'] = False
+
+    return jsonify(data)
 
 
 def app_init(config):
