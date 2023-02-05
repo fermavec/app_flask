@@ -59,18 +59,25 @@ def logout():
 def index():
     if current_user.is_authenticated:
         if current_user.idUserAccess.idUserAccess == 1:
-            sold_items = []
-            data = {
-                'title': 'Sold Items',
-                'sold_items': sold_items
-            }
+            try:    
+                sold_items = ModelBook.list_sold_books(db)
+                data = {
+                    'title': 'Sold Items',
+                    'sold_items': sold_items
+                }
+                return render_template('index.html', data=data)
+            except Exception as e:
+                return render_template('error_templates/error.html', message=format(e))
         else:
-            my_books = []
-            data = {
-                'title': 'My Books',
-                'my_books': my_books
-            }
-        return render_template('index.html', data=data)
+            try:
+                my_books = ModelSale.list_user_items(db, current_user)
+                data = {
+                    'title': 'My Books',
+                    'my_books': my_books
+                }
+                return render_template('index.html', data=data)
+            except Exception as e:
+                return render_template('error_templates/error.html', message=format(e))
     else:
         redirect(url_for('login'))
 

@@ -6,3 +6,4 @@ class Book:
         self.idAuthor = idAuthor
         self.publishYear = publishYear
         self.price = price
+        self.sold_items = 0

@@ -125,3 +125,8 @@ pip install flask-login
 <br></br>
 4. Ajustamos toda la función de compra agregando una fetchapi de javascript que nos permita conectar el evento de boton de compra y enviar la información al servidor para su posterior registro en la base de datos. Todo esto mediante una vista nueva y un modelo de venta.
 <br></br>
+5. Hacemos ajustes para presentar la información de acuerdo con el diseño. Hasta aquí hemos terminado la lógica de nuestra app, lo demás es tema de presentación de la información.
+<br></br>
+<br></br>
+### Extras
+-Instalando un servidor de correo electrónico.

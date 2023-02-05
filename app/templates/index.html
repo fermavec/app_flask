@@ -34,11 +34,30 @@
         {% endif %}
     {% else %}
         {% if data.my_books|length > 0 %}
-        
-        {% else %}
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <h3>There are no books in your library</h3>
+        {% for purchase in data.my_books %}
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <img src="{{ url_for('static', filename='img/books/isbn.jpg') }}" height="320" width="auto" alt="book_image" class="card-image-top">
+                    <h5 class="card-title">
+                        {{ purchase.isbn.bookTitle }} 
+                        <span style="float-right;">${{ purchase.isbn.price }}</span>
+                    </h5>
+                    <p class="card-text">
+                        isbn: {{ purchase.isbn.isbn }}
+                    </p>
+                    <p class="card-text">
+                        Date of purchase: {{ purchase.transactionDate }}
+                    </p>
+    
+                </div>
+            </div>
         </div>
+        {% endfor %}
+        {% else %}
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <h3>There are no books in your library</h3>
+            </div>
         {% endif %}    
     {% endif %}
 </div>
